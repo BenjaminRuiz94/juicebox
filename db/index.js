@@ -338,6 +338,15 @@ async function getPostsByTagName(tagName) {
   }
 }
 
+async function getAllTags() {
+  try {
+    const { rows } = await client.query(`SELECT * FROM tags`);
+    return rows;
+  } catch (error) {
+    console.log("Cannot get tags!");
+  }
+}
+
 // and export them
 module.exports = {
   client,
@@ -349,4 +358,5 @@ module.exports = {
   updatePost,
   getUserById,
   getPostsByTagName,
+  getAllTags,
 };
