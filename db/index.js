@@ -11,6 +11,25 @@ async function getAllUsers() {
   return rows;
 }
 
+async function getUserByUsername(username) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+      SELECT *
+      FROM users
+      WHERE username=$1;
+    `,
+      [username]
+    );
+    console.log(user, username, "check here");
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function createUser({ username, password, name, location }) {
   try {
     const { rows } = await client.query(
@@ -359,4 +378,5 @@ module.exports = {
   getUserById,
   getPostsByTagName,
   getAllTags,
+  getUserByUsername,
 };
