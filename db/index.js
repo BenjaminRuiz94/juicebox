@@ -23,7 +23,7 @@ async function getUserByUsername(username) {
     `,
       [username]
     );
-    console.log(user, username, "check here");
+
     return user;
   } catch (error) {
     throw error;
