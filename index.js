@@ -2,7 +2,7 @@ const { PORT = 3000 } = process.env;
 const express = require("express");
 const server = express();
 const apiRouter = require("./api");
-
+const { client } = require("./db");
 const morgan = require("morgan");
 server.use(morgan("dev"));
 
@@ -17,7 +17,6 @@ server.use((req, res, next) => {
 });
 server.use("/api", apiRouter);
 
-const { client } = require("./db");
 client.connect();
 
 server.listen(PORT, () => {
