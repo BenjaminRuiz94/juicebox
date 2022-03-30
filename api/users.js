@@ -22,12 +22,6 @@ usersRouter.get("/", async (req, res) => {
     users,
   });
 });
-//------------ENDING HERE****** attempting to log in user. username and password not decon properly.
-
-// usersRouter.post("/login", async (req, res, next) => {
-//   console.log(req.body);
-//   res.end();
-// });
 
 usersRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;

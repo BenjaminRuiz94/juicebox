@@ -136,31 +136,6 @@ async function createTables() {
   }
 }
 
-// async function createInitialTags() {
-//   try {
-//     console.log("Starting to create tags...");
-
-//     const [happy, sad, inspo, catman] = await createTags([
-//       "#happy",
-//       "#worst-day-ever",
-//       "#youcandoanything",
-//       "#catmandoeverything",
-//     ]);
-//     console.log("getting posts for tags");
-//     console.log(happy, sad, "***These should be tags***");
-//     const [postOne, postTwo, postThree] = await getAllPosts();
-
-//     await addTagsToPost(postOne.id, [happy, inspo]);
-//     await addTagsToPost(postTwo.id, [sad, inspo]);
-//     await addTagsToPost(postThree.id, [happy, catman, inspo]);
-
-//     console.log("Finished creating tags!");
-//   } catch (error) {
-//     console.log("Error creating tags!");
-//     throw error;
-//   }
-// }
-
 async function testDB() {
   try {
     console.log("Starting to test database...");
