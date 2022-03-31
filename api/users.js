@@ -3,8 +3,10 @@ const usersRouter = express.Router();
 const { getAllUsers, getUserById, updateUser } = require("../db");
 const { getUserByUsername } = require("../db");
 const { createUser } = require("../db");
+const { requireActiveUser, requireUser } = require("./utils");
 
 const jwt = require("jsonwebtoken");
+const utils = require("pg/lib/utils");
 const token = jwt.sign({ id: 1, username: "albert" }, process.env.JWT_SECRET, {
   expiresIn: "1h",
 });
@@ -91,31 +93,31 @@ usersRouter.post("/register", async (req, res, next) => {
 });
 
 //WORK ZONE -------
-// postsRouter.delete("/:userId", requireUser, async (req, res, next) => {
-//   try {
-//     const user = await getUserById(req.params.userId);
+usersRouter.delete("/:userId", requireActiveUser, async (req, res, next) => {
+  try {
+    const user = await getUserById(req.params.userId);
+    console.log("THIS IS THE USER FROM THE DB", user);
+    if (user.id === req.user.id) {
+      const updatedUser = await updateUser(user.id, { active: false });
 
-//     if (user.userId === req.user.id) {
-//       const updatedUser = await updateUser(userId, { active: false });
-
-//       res.send({ user: updatedUser });
-//     } else {
-//       next(
-//         user
-//           ? {
-//               name: "UnauthorizedUserError",
-//               message: "You cannot delete a post which is not yours",
-//             }
-//           : {
-//               name: "PostNotFoundError",
-//               message: "That post does not exist",
-//             }
-//       );
-//     }
-//   } catch ({ name, message }) {
-//     next({ name, message });
-//   }
-// });
+      res.send({ user: updatedUser });
+    } else {
+      next(
+        user
+          ? {
+              name: "UnauthorizedUserError",
+              message: "You cannot delete a user which is not yours",
+            }
+          : {
+              name: "UserNotFoundError",
+              message: "That user does not exist",
+            }
+      );
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
 //--^--^-END WORK ZONE --^--^--
 module.exports = usersRouter;
