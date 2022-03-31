@@ -1,6 +1,6 @@
 const express = require("express");
 const usersRouter = express.Router();
-const { getAllUsers } = require("../db");
+const { getAllUsers, getUserById, updateUser } = require("../db");
 const { getUserByUsername } = require("../db");
 const { createUser } = require("../db");
 
@@ -90,4 +90,32 @@ usersRouter.post("/register", async (req, res, next) => {
   }
 });
 
+//WORK ZONE -------
+// postsRouter.delete("/:userId", requireUser, async (req, res, next) => {
+//   try {
+//     const user = await getUserById(req.params.userId);
+
+//     if (user.userId === req.user.id) {
+//       const updatedUser = await updateUser(userId, { active: false });
+
+//       res.send({ user: updatedUser });
+//     } else {
+//       next(
+//         user
+//           ? {
+//               name: "UnauthorizedUserError",
+//               message: "You cannot delete a post which is not yours",
+//             }
+//           : {
+//               name: "PostNotFoundError",
+//               message: "That post does not exist",
+//             }
+//       );
+//     }
+//   } catch ({ name, message }) {
+//     next({ name, message });
+//   }
+// });
+
+//--^--^-END WORK ZONE --^--^--
 module.exports = usersRouter;
